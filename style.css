@@ -1,0 +1,19 @@
+body{
+    height: 100vh;
+    background-color: rgb(92, 92, 92);
+}
+
+.div-container{
+    background-color: #F5FDC6;
+    border-radius: 10px;
+    -webkit-box-shadow: 4px 7px 18px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 7px 18px 1px rgba(0,0,0,0.75);
+    box-shadow: 4px 7px 18px 1px rgba(0,0,0,0.75);
+}
+
+.divider{
+    border: 1px solid gray;
+}
+.calculator-body {
+    width: fit-content;
+}
