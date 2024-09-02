@@ -6,8 +6,8 @@
 
 session_start();
 
-if (!isset($_SESSION['$array_operations'])) {
-	$_SESSION['$array_operations'] = [];
+if (!isset($_SESSION['array_operations'])) {
+	$_SESSION['array_operations'] = [];
 }
 
  function debug_to_console($data) {
@@ -19,7 +19,7 @@ if (!isset($_SESSION['$array_operations'])) {
 }
 
 function handle_submit() {
-	$array_operations = $_SESSION['$array_operations'];
+	$array_operations = $_SESSION['array_operations'];
 
 	$array_result = array(
 		($_POST['subject1']),
@@ -30,7 +30,7 @@ function handle_submit() {
 	array_push($array_operations, array(($_POST['subject1']), ($_POST['subject2']), ($_POST['subject3']), ($_POST['userName'])
 	));
 
-	$_SESSION['$array_operations'] = $array_operations;
+	$_SESSION['array_operations'] = $array_operations;
 
     if (!is_numeric($_POST['subject1']) || !is_numeric($_POST['subject2']) || (!is_numeric($_POST['subject3']) && $_POST['subject3'] != "")) {
         $result = $_POST['userName'] . " - " . implode("", $array_result);
@@ -42,12 +42,16 @@ function handle_submit() {
 }
 
 function reset_memory() {
-	$_SESSION['$array_operations'] = [];
+	$_SESSION['array_operations'] = [];
 }
 
 $result = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if (isset($_POST['subject1']) == false){
+		$_SESSION['array_operations'] = "";
+		$result = handle_submit();
+	}
     if (isset($_POST['reset'])) {
         reset_memory();
     } else {
@@ -91,20 +95,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			echo "</div>";
 		}
 
-		if (!empty($_SESSION['$array_operations'])) {
+		if (!empty($_SESSION['array_operations'])) {
+			if(isset($_POST['subject1']) == false){
+				echo "<h2>Waiting operations</h2>";
+				return;
+			};
 			$unique_users = [];
 			echo "<hr class='divider'>";
 			echo "<h2>Previous results with the same operation:</h2>";
 			echo "<ul>";
-			foreach ($_SESSION['$array_operations'] as $values) {
-
+			foreach ($_SESSION['array_operations'] as $values) {
 				if(in_array($values[3], $unique_users)){
 					continue;
 				}; 
-
 				if ($values[0]==$_POST['subject1'] && $values[1]==$_POST['subject2'] && $values[2]==$_POST['subject3']){
 					array_push($unique_users, $values[3]);
 					echo "<li class='h5'>$values[3]: " . "$values[0], $values[1], $values[2]" . "</li>";
+				} else {
+					$errors[] = "Bitte benutzen Sie das Formular aus Ihrem Profil";
 				}
 
 			}
