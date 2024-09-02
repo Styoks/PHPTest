@@ -5,12 +5,13 @@
 *---------------------------------------------------------------------------------------*/
 
 session_start();
+$result = null;
 
 if (!isset($_SESSION['array_operations'])) {
 	$_SESSION['array_operations'] = [];
 }
 
- function debug_to_console($data) {
+function debug_to_console($data) {
     $output = $data;
     if (is_array($output))
         $output = implode(',', $output);
@@ -45,13 +46,7 @@ function reset_memory() {
 	$_SESSION['array_operations'] = [];
 }
 
-$result = null;
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if (isset($_POST['subject1']) == false){
-		$_SESSION['array_operations'] = "";
-		$result = handle_submit();
-	}
     if (isset($_POST['reset'])) {
         reset_memory();
     } else {
@@ -95,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			echo "</div>";
 		}
 
-		if (!empty($_SESSION['array_operations'])) {
+		if (!empty($_SESSION['array_operations']) && (isset($_POST['subject1']))) {
 			$unique_users = [];
 			echo "<hr class='divider'>";
 			echo "<h2>Previous results with the same operation:</h2>";
