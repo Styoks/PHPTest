@@ -96,10 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 
 		if (!empty($_SESSION['array_operations'])) {
-			if(isset($_POST['subject1']) == false){
-				echo "<h2>Waiting operations</h2>";
-				return;
-			};
 			$unique_users = [];
 			echo "<hr class='divider'>";
 			echo "<h2>Previous results with the same operation:</h2>";
@@ -120,9 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		} else {
 			echo "<h2>Waiting operations</h2>";
 		}
-
 		echo "</div>"
-
 		?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 	</body>
